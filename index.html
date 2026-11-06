@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>弾幕ゲー</title>
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="game-canvas"></canvas>
+
+    <!-- 読み込む順番が重要 -->
+    <script src="input.js"></script>
+    <script src="collision.js"></script>
+    <script src="effect.js"></script>
+    <script src="pbullet.js"></script>
+    <script src="player.js"></script>
+    <script src="enemy.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
