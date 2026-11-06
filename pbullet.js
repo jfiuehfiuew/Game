@@ -1,4 +1,4 @@
-var weapon = 1;
+var weapon = 3;
 var shotCooldown = 0;
 var laserSide = 0;
 var bullets = [];
@@ -13,7 +13,8 @@ function spawnBullet(x, y, vx, vy, w, h) {
 }
 var weaponData = {
     1: { name: 'LASER',  damage: 2, color: 'cyan', cooldown: 2 },
-    2: { name: 'SPREAD', damage: 1, color: 'orange', cooldown: 4 }
+    2: { name: 'SPREAD', damage: 1, color: 'orange', cooldown: 4 },
+    3: { name: 'KYUSAI', damage: 2, color: 'orange', cooldown: 3 }
 };
 
 function shoot() {
@@ -25,6 +26,16 @@ function shoot() {
     } else if (weapon === 2) {
         var speed = 20;
         var angles = [-15, -10, 0, 10, 15];
+        for (var i = 0; i < angles.length; i++) {
+            var rad = angles[i] * Math.PI / 180;
+            spawnBullet(player.x, player.y - 14,
+                        Math.sin(rad) * speed, -Math.cos(rad) * speed, 6, 10);
+        }
+
+    
+    } else if (weapon === 3) {
+        var speed = 25;
+        var angles = [-150, -25, -7, 0, 7, 25, 150];
         for (var i = 0; i < angles.length; i++) {
             var rad = angles[i] * Math.PI / 180;
             spawnBullet(player.x, player.y - 14,
