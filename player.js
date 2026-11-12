@@ -1,10 +1,10 @@
-var moveSpeed = 4;
-var slowSpeed = 2;
+var moveSpeed = 6;
+var slowSpeed = 3;
 
 var player = {
     x: 200,
     y: 520,
-    radius: 12,
+    radius: 18,
     hitSize: 3
 };
 
@@ -34,6 +34,7 @@ function updatePlayer() {
     // ショット
     if (shotCooldown > 0) shotCooldown--;
     if (keys.KeyZ && shotCooldown === 0) shoot();
+    if (keys.keyX && bombCooldown === 0) useBomb();
 }
 
 function drawPlayer() {

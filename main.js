@@ -12,6 +12,9 @@ function update() {
     updateEnemies();
     updateCollisions();   // 追加
     updateEffects();      // 追加
+    updateRank();
+    updateEnemyBullets();   // update() の中
+        updateBomb();
 }
 
 function draw() {
@@ -22,7 +25,8 @@ function draw() {
     drawEnemies();
     drawEffects();        // 追加
     drawPlayer();
-
+    drawBomb();
+    drawEnemyBullets();     // draw() の中
     ctx.fillStyle = 'white';
     ctx.font = '14px sans-serif';
     ctx.textAlign = 'left';
