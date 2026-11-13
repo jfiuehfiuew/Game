@@ -43,18 +43,21 @@ function shoot() {
 
         laserSide = 1 - laserSide;
 
-    } else if (weapon === 2) {
-     var speed = 20;
-     var angles = [-15, -5, 0, 5, 15];
-     var tilt = (spreadSide === 0) ? -8 : 8;
+     } else if (weapon === 2) {
+    var speed = 20;
+    var powered = spreadPower > 0;
+    var angles = powered
+        ? [-24, -18, -12, -6, 0, 6, 12, 18, 24]
+        : [-22, -10, -5, 0, 5, 10, 22];
+    var tilt = (spreadSide === 0) ? -8 : 8;
 
-      for (var i = 0; i < angles.length; i++) {
-          var rad = (angles[i] + tilt) * Math.PI / 180;
-          spawnBullet(player.x, player.y - 14,
-                     Math.sin(rad) * speed, -Math.cos(rad) * speed,
-                     7, 10);
-     }
-
+    for (var i = 0; i < angles.length; i++) {
+        var rad = (angles[i] + tilt) * Math.PI / 180;
+        spawnBullet(player.x, player.y - 14,
+                    Math.sin(rad) * speed, -Math.cos(rad) * speed,
+                    powered ? 9 : 6, powered ? 14 : 10,
+                    powered ? { damage: 3, color: '#ff4444', stroke: '#990000', explode: true } : null);
+    }
     spreadSide = 1 - spreadSide;
 
 

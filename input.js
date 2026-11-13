@@ -19,6 +19,7 @@ document.addEventListener('keydown', function (e) {
         keys[e.code] = true;
         e.preventDefault();
     }
+    if (e.code === 'KeyX' && !e.repeat) useBomb()
 });
 document.addEventListener('keydown', function (e) {
     if (e.code in keys) {

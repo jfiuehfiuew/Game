@@ -73,19 +73,19 @@ function killEnemy(en) {
     en.dead = true;
     spawnEffect(en.x, en.y);
         if (en.type === enemyTypes.scroll) {
-            score += 50;
+            spawnCoins(en.x, en.y, 5);
         }
         if (en.type === enemyTypes.raider) {
-            score += 100;
+            spawnCoins(en.x, en.y, 10);
         }
         if (en.type === enemyTypes.ranger) {
-            score += 250;
+            spawnCoins(en.x, en.y, 20);
         }
         if (en.type === enemyTypes.bomber) {
-            score += 200;
+            spawnCoins(en.x, en.y, 10);
         }
         if (en.type === enemyTypes.drift) {
-            score += 150;
+            spawnCoins(en.x, en.y, 15);
         }
     addRank(0.1);
     }
@@ -94,19 +94,19 @@ function killEnemy(en) {
     en.dead = true;
     spawnEffect(en.x, en.y);
         if (en.type === enemyTypes.scroll) {
-            score += 100;
+            spawnCoins(en.x, en.y, 10);
         }
         if (en.type === enemyTypes.raider) {
-            score += 200;
+            spawnCoins(en.x, en.y, 20);
         }
         if (en.type === enemyTypes.ranger) {
-            score += 500;
+            spawnCoins(en.x, en.y, 40);
         }
         if (en.type === enemyTypes.bomber) {
-            score += 400;
+            spawnCoins(en.x, en.y, 20);
         }
         if (en.type === enemyTypes.drift) {
-            score += 300;
+            spawnCoins(en.x, en.y, 30);
         }
 
         addRank(0.1);

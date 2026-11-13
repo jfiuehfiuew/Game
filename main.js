@@ -30,6 +30,8 @@ function update() {
         updateEnemyBullets();
         updateCollisions();
         updateEffects();
+            updateCoins();   // update側
+        updateBomb();
     }
     pressed = {};
 }
@@ -46,6 +48,14 @@ function draw() {
     drawEffects();
     drawPlayer();
     drawHud();
+    bombShakeBegin();      // ← 追加:描画の一番最初
+
+    // ...背景、敵、自機、弾などの既存の描画...
+    drawBomb();
+
+    bombShakeEnd();        // ← 追加:描画の一番最後
+    
+drawCoins();     // draw側(敵より手前、ボムより奥くらい)
     if (scene === 'gameover') drawGameOver();
 }
 
@@ -58,10 +68,11 @@ function drawTitle() {
     ctx.font = '16px sans-serif';
     ctx.fillText('1 : LASER 難易度:★★★★★ 直線にレーザーを放つ', base_w / 2, 280);
     ctx.fillText('2 : SPREAD 難易度:★★★ 広範囲にショットを放つ', base_w / 2, 310);
-    ctx.fillText('3 : LASPREAD 難易度:★ レーザーとスプレッドのいいとこどり。 !! スコア倍率0.5x!!', base_w / 2, 340);
+    ctx.fillText('3 : LASPREAD 難易度:★ 最強。 !! スコア倍率0.5x!!', base_w / 2, 340);
 
     ctx.font = '13px sans-serif';
     ctx.fillText('Arrow : MOVE   Shift : SLOW   Z : SHOT', base_w / 2, 420);
+    ctx.fillText('X : Bomb', base_w / 2, 450);
     ctx.textAlign = 'left';
 }
 
