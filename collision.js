@@ -68,8 +68,47 @@ function playerHit() {
 }
 
 function killEnemy(en) {
+    if(weapon == 3)
+    {
     en.dead = true;
     spawnEffect(en.x, en.y);
-    score += 100;
+        if (en.type === enemyTypes.scroll) {
+            score += 50;
+        }
+        if (en.type === enemyTypes.raider) {
+            score += 100;
+        }
+        if (en.type === enemyTypes.ranger) {
+            score += 250;
+        }
+        if (en.type === enemyTypes.bomber) {
+            score += 200;
+        }
+        if (en.type === enemyTypes.drift) {
+            score += 150;
+        }
     addRank(0.1);
+    }
+    else
+    {
+    en.dead = true;
+    spawnEffect(en.x, en.y);
+        if (en.type === enemyTypes.scroll) {
+            score += 100;
+        }
+        if (en.type === enemyTypes.raider) {
+            score += 200;
+        }
+        if (en.type === enemyTypes.ranger) {
+            score += 500;
+        }
+        if (en.type === enemyTypes.bomber) {
+            score += 400;
+        }
+        if (en.type === enemyTypes.drift) {
+            score += 300;
+        }
+
+        addRank(0.1);
+    }
 }

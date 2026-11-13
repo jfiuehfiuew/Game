@@ -20,7 +20,7 @@ var b = {
 var weaponData = {
     1: { name: 'LASER',  damage: 2, color: '#a8f5ff', stroke: '#03d9ff', cooldown: 2,
          desc: '左右交互に撃つ高速レーザー。直線の火力が強い', power: 5, range: 2, speed: 5 },
-    2: { name: 'SPREAD', damage: 1, color: '#ffd000', stroke: '#ff6600', cooldown: 2,
+    2: { name: 'SPREAD', damage: 1, color: '#09ff00', stroke: '#009b00', cooldown: 2,
          desc: '扇状にばらまく。遠距離では広範囲にちくちく。近距離で全弾当てるとレーザーよりダメージがでる', power: 3, range: 5, speed: 3 },
     3: { name: 'KYUSAI', damage: 2, color: '#e0a8ff', stroke: '#6a1b9a', cooldown: 2,
          desc: '高火力、広範囲にショットを放つ。初心者向け。 !!スコア倍率0.5x!!', power: 5, range: 5, speed: 5 }
