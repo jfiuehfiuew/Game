@@ -99,6 +99,17 @@ function startGame() {
     player.y = base_h - 80;
     gameOverTimer = 0;
     scene = 'play';
+    coins = [];
+    bombs = 3;
+    bombCooldown = 0;
+    megaLaser = null;
+    spreadPower = 0;
+    bombFx.particles = [];
+    bombFx.rings = [];
+    bolts = [];
+    bombFx.bolts = [];
+    bombFx.flash = 0;
+    bombFx.shake = 0;
 }
 
 function drawGameOver() {
@@ -113,10 +124,23 @@ function drawGameOver() {
     ctx.textAlign = 'left';
 }
 
-function Engine() {
-    update();
+var STEP = 1000 / 60;   // 1回の更新あたりのミリ秒(60回/秒)
+var lastTime = 0;
+var acc = 0;
+
+function Engine(now) {
+    if (lastTime === 0) lastTime = now;
+    acc += Math.min(now - lastTime, 100);   // タブ切替後の暴走防止
+    lastTime = now;
+
+    while (acc >= STEP) {
+        update();
+        acc -= STEP;
+    }
     draw();
     requestAnimationFrame(Engine);
 }
+
+requestAnimationFrame(Engine);   // 最後の「Engine();」はこの1行に置き換える
 
 Engine();
