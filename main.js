@@ -56,9 +56,9 @@ function drawTitle() {
     ctx.fillText('△ vs □', base_w / 2, 200);
 
     ctx.font = '16px sans-serif';
-    ctx.fillText('1 : 直線', base_w / 2, 280);
-    ctx.fillText('2 : 扇状', base_w / 2, 310);
-    ctx.fillText('3 : 最強', base_w / 2, 340);
+    ctx.fillText('1 : LASER 難易度:★★★★★ 直線にレーザーを放つ', base_w / 2, 280);
+    ctx.fillText('2 : SPREAD 難易度:★★★ 広範囲にショットを放つ', base_w / 2, 310);
+    ctx.fillText('3 : LASPREAD 難易度:★ レーザーとスプレッドのいいとこどり。 !! スコア倍率0.5x!!', base_w / 2, 340);
 
     ctx.font = '13px sans-serif';
     ctx.fillText('Arrow : MOVE   Shift : SLOW   Z : SHOT', base_w / 2, 420);
