@@ -6,18 +6,25 @@ var keys = {
     ShiftLeft: false,
     ShiftRight: false,
     KeyZ: false,
-    KeyX: false
+    KeyX: false,
+    Digit1: false,
+    Digit2: false,
+    Digit3: false
 };
+var pressed = {}; 
 
+document.addEventListener('keydown', function (e) {
+    if (e.code in keys) {
+        if (!keys[e.code]) pressed[e.code] = true; 
+        keys[e.code] = true;
+        e.preventDefault();
+    }
+});
 document.addEventListener('keydown', function (e) {
     if (e.code in keys) {
         keys[e.code] = true;
         e.preventDefault();
     }
-    if (e.code === 'Digit1') weapon = 1;
-    if (e.code === 'Digit2') weapon = 2;
-    if (e.code === 'Digit3') weapon = 3;
-    if (e.code === 'KeyX' && !e.repeat) useBomb();   // ← keydown の中
 });
 document.addEventListener('keyup', function (e) {
     if (e.code in keys) keys[e.code] = false;

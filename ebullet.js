@@ -1,25 +1,20 @@
-// 敵弾専用ファイル。敵弾は enemyBullets に入る(enemy.js 側の同名変数は削除してください)
-var enemyBullets = [];
 
-// ===== 敵弾の種類(それぞれ独立) =====
-// create(x, y, opt): 弾の初期データを返す
-// update(b): 毎フレーム呼ばれる。消すときは b.dead = true
-// draw(b): 描画
+var enemyBullets = [];
 var ebulletTypes = {
 
-    // ---- 通常弾: 向いた方向にまっすぐ ----
+
     normal: {
-         create: function (x, y, opt) {
+        create: function (x, y, opt) {
             var angle = opt.angle;
             var speed = opt.speed || 3;
             return { x: x, y: y,
                      vx: Math.cos(angle) * speed,
                      vy: Math.sin(angle) * speed,
-                     r: 3,                          // 中心から辺までの距離
-                     rot: 0,                        // 今の回転角
-                     rotSpeed: opt.rotSpeed || 0.5, // 1フレームの回転量(ラジアン)
-                     fill: opt.fill || '#ffd900',   // 中身: 明るい色
-                     stroke: opt.stroke || '#ff7b00' // 枠: 濃い色
+                     r: 3, //でかさ
+                     rot: 0,                        
+                     rotSpeed: opt.rotSpeed || 0.5, // 回転速度
+                     fill: opt.fill || '#ffd900',   // 中
+                     stroke: opt.stroke || '#ff7b00' // 枠
                    };
         },
         update: function (b) {
@@ -39,10 +34,37 @@ var ebulletTypes = {
             ctx.restore();
         }
     },
-
-    // ---- 誘導→加速弾 ----
-    // 1. ゆっくり出る  2. 自機の方向へ少しずつ向きを変える
-    // 3. 向きが合ったら誘導をやめて加速
+    laser: {
+        create: function (x, y, opt) {
+            var angle = opt.angle;
+            var speed = opt.speed || 5;
+            return { x: x, y: y,
+                     angle: angle,                    // 向き
+                     vx: Math.cos(angle) * speed,
+                     vy: Math.sin(angle) * speed,
+                     len: opt.len || 30,              // 長さ
+                     wid: opt.wid || 3,               // 太さ
+                     r: 4,                            // でかさ
+                     fill: opt.fill || '#e26eff',     // 中
+                     stroke: opt.stroke || '#6f00ff'  // 枠
+                   };
+        },
+        update: function (b) {
+            b.x += b.vx;
+            b.y += b.vy;
+        },
+        draw: function (b) {
+            ctx.save();
+            ctx.translate(b.x, b.y);
+            ctx.rotate(b.angle);
+            ctx.fillStyle = b.fill;
+            ctx.strokeStyle = b.stroke;
+            ctx.lineWidth = 1.5;
+            ctx.fillRect(-b.len / 2, -b.wid / 2, b.len, b.wid);
+            ctx.strokeRect(-b.len / 2, -b.wid / 2, b.len, b.wid);
+            ctx.restore();
+        }
+    },
     homing: {
         create: function (x, y, opt) {
             return { x: x, y: y,
@@ -91,7 +113,6 @@ var ebulletTypes = {
         }
     },
 
-    // ---- 爆弾: 一定時間後に8方向へちび弾 ----
     bomb: {
         create: function (x, y, opt) {
             var angle = opt.angle;
@@ -99,7 +120,7 @@ var ebulletTypes = {
             return { x: x, y: y,
                      vx: Math.cos(angle) * speed,
                      vy: Math.sin(angle) * speed,
-                     timer: opt.fuse || 60,    // 爆発までのフレーム数
+                     timer: opt.fuse || 60, //たいまー
                      r: 15, color: 'orange' };
         },
         update: function (b) {
@@ -107,9 +128,8 @@ var ebulletTypes = {
             b.y += b.vy;
             b.timer--;
             if (b.timer <= 0) {
-                // 8方向にちび弾
-                for (var i = 0; i < 8; i++) {
-                    var a = Math.PI * 2 * i / 8;
+                for (var i = 0; i < 8; i++) { //8かい繰り返すってこと
+                    var a = Math.PI * 2 * i / 8; //45ど
                     spawnEnemyBullet('normal', b.x, b.y, { angle: a, speed: 2.5 });
                 }
                 b.dead = true;
@@ -126,17 +146,23 @@ var ebulletTypes = {
     }
 };
 
-// ===== 敵弾を出す =====
+
+
+
+
+
+
+
+
 function spawnEnemyBullet(typeName, x, y, opt) {
     var type = ebulletTypes[typeName];
     var b = type.create(x, y, opt || {});
-    b.type = type;      // 自分の update / draw を覚えておく
+    b.type = type;
     b.dead = false;
     enemyBullets.push(b);
 }
 
 function updateEnemyBullets() {
-    // for で回している最中に push されても安全なよう、今ある分だけ処理する
     var n = enemyBullets.length;
     for (var i = 0; i < n; i++) {
         enemyBullets[i].type.update(enemyBullets[i]);

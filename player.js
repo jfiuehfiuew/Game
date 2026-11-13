@@ -49,5 +49,5 @@ function drawPlayer() {
 
     ctx.fillStyle = 'cyan';
     ctx.fillRect(player.x - player.hitSize, player.y - player.hitSize,
-                 player.hitSize * 2, player.hitSize * 2);
+    player.hitSize * 2, player.hitSize * 2);
 }

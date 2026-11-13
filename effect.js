@@ -1,11 +1,5 @@
-var effects = [];   // 画面上で再生中のエフェクト
-
-// ===== エフェクトの種類(それぞれ独立) =====
-// create(x, y): エフェクトのオブジェクトを返す
-// update(fx): 毎フレーム呼ばれる。終わったら fx.dead = true にする
-// draw(fx): 描画
+var effects = [];
 var effectTypes = {
-    // 1: 広がる円(衝撃波)
     1: {
         create: function (x, y) {
             return { x: x, y: y, age: 0, life: 20, dead: false };
@@ -15,7 +9,7 @@ var effectTypes = {
             if (fx.age >= fx.life) fx.dead = true;
         },
         draw: function (fx) {
-            var t = fx.age / fx.life;                 // 0 → 1
+            var t = fx.age / fx.life;
             ctx.strokeStyle = 'rgba(255,255,255,' + (1 - t) + ')';
             ctx.lineWidth = 3;
             ctx.beginPath();
@@ -24,7 +18,6 @@ var effectTypes = {
         }
     },
 
-    // 2: 四角い破片が飛び散る
     2: {
         create: function (x, y) {
             var parts = [];
@@ -51,7 +44,7 @@ var effectTypes = {
         }
     },
 
-    // 3: 一瞬光る白い四角
+
     3: {
         create: function (x, y) {
             return { x: x, y: y, age: 0, life: 10, dead: false };
@@ -66,11 +59,26 @@ var effectTypes = {
             ctx.fillStyle = 'rgba(255,255,200,' + (1 - t) + ')';
             ctx.fillRect(fx.x - s, fx.y - s, s * 2, s * 2);
         }
+    },
+
+    4: {
+        create: function (x, y) {
+            return { x: x, y: y, age: 0, life: 8, dead: false };
+        },
+        update: function (fx) {
+            fx.age++;
+            if (fx.age >= fx.life) fx.dead = true;
+        },
+        draw: function (fx) {
+            var t = fx.age / fx.life;
+            ctx.fillStyle = 'rgba(255,255,255,' + (1 - t) + ')';
+            var s = 3 + t * 4;
+            ctx.fillRect(fx.x - s, fx.y - s, s * 2, s * 2);
+        }
     }
 };
 
-// ===== エフェクトを出す =====
-// id を省略するとランダムに1つ選ぶ
+
 function spawnEffect(x, y, id) {
     if (id === undefined) {
         var ids = Object.keys(effectTypes);
@@ -78,7 +86,7 @@ function spawnEffect(x, y, id) {
     }
     var type = effectTypes[id];
     var fx = type.create(x, y);
-    fx.type = type;           // 自分の update / draw を覚えておく
+    fx.type = type;
     effects.push(fx);
 }
 
@@ -86,7 +94,7 @@ function updateEffects() {
     for (var i = 0; i < effects.length; i++) {
         effects[i].type.update(effects[i]);
     }
-    effects = effects.filter(function (fx) { return !fx.dead; });   // 終わったら消える
+    effects = effects.filter(function (fx) { return !fx.dead; });
 }
 
 function drawEffects() {
